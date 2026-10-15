@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Loan application — Sterling Finance</title>
 <meta name="description" content="Complete your Sterling Finance loan application.">
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = '858a592b79d740b12b1c26d2382598d9dbc1a4cd';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+
 <style>
   :root{
     --plum:#3A0353; --plum-deep:#2A023E; --plum-ink:#20022E;
@@ -239,7 +252,19 @@
     var d = new FormData(form);
     var btn = form.querySelector("button[type=submit]");
     btn.disabled = true;
-    btn.textContent = "Submitting\u2026";
+
+    var splash = document.getElementById("splash");
+    function showLoader () {
+      splash.style.display = "flex";
+      splash.classList.remove("hide");
+      document.body.style.overflow = "hidden";
+    }
+    function hideLoader () {
+      splash.classList.add("hide");
+      document.body.style.overflow = "";
+      setTimeout(function () { splash.style.display = "none"; }, 750);
+    }
+    showLoader();                       /* sterling loader while processing */
 
     sb.from("loan_applications").insert({
       enquiry_id: enquiryId,
@@ -260,11 +285,12 @@
       consent: d.get("consent") === "on"
     }).then(function (res) {
       if (res.error) {
+        hideLoader();
         errBox.textContent = "Something went wrong submitting your application \u2014 please try again or contact us directly.";
         errBox.style.display = "block";
         btn.disabled = false;
-        btn.textContent = "Submit application";
       } else {
+        hideLoader();
         document.getElementById("app-view").hidden = true;
         document.getElementById("app-success").hidden = false;
         window.scrollTo(0, 0);
