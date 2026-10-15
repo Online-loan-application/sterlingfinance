@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan application — Sterling Finance</title>
+<meta name="description" content="Complete your Sterling Finance loan application.">
+<style>
+  :root{
+    --plum:#3A0353; --plum-deep:#2A023E; --plum-ink:#20022E;
+    --purple:#804A8A; --cream:#F8D299; --amber:#F59E51;
+    --cream-soft:#F3E3C2; --white:#FDF8EE;
+    --serif:Georgia,'Noto Serif Display','Liberation Serif',serif;
+    --sans:'Noto Sans','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--plum-deep);color:var(--white);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px;width:100%}
+
+  #splash{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(120% 120% at 50% 30%,#3A0353 0%,#2A023E 70%,#20022E 100%);
+    transition:opacity .7s ease}
+  #splash.hide{opacity:0;pointer-events:none}
+  .splash-inner{text-align:center}
+  .splash-inner svg{width:110px;height:auto}
+  .sp-shield{stroke-dasharray:100;stroke-dashoffset:100;opacity:1;animation:sp-draw 2.2s cubic-bezier(.6,.05,.35,1) infinite}
+  .sp-s{opacity:0;transform-box:fill-box;transform-origin:center;animation:sp-s 2.2s ease-in-out infinite}
+  @keyframes sp-draw{0%{stroke-dashoffset:100;opacity:1}42%{stroke-dashoffset:0}82%{opacity:1}96%,100%{opacity:0;stroke-dashoffset:0}}
+  @keyframes sp-s{0%,16%{opacity:0;transform:scale(.5)}26%{opacity:1;transform:scale(1.08)}32%,78%{opacity:1;transform:scale(1)}88%{opacity:0;transform:scale(.85)}100%{opacity:0}}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(42,2,62,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(128,74,138,.35)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:74px;max-width:1140px;margin:0 auto;padding:0 24px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand svg{width:30px;height:46px}
+  .brand span{font-family:var(--serif);font-size:20px;color:var(--cream)}
+  .brand small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.42em;color:var(--purple);font-weight:600}
+  .back{font-size:14px;color:var(--cream-soft);transition:color .2s}
+  .back:hover{color:var(--amber)}
+
+  main{flex:1;padding:140px 0 90px;
+       background:radial-gradient(110% 80% at 50% 0%,#47106A 0%,var(--plum-deep) 60%)}
+  .panel{background:linear-gradient(160deg,rgba(128,74,138,.18),rgba(58,3,83,.4));border:1px solid rgba(128,74,138,.45);
+         border-radius:26px;padding:clamp(30px,5vw,50px)}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  h1{font-size:clamp(27px,3.6vw,36px);color:var(--white);margin:14px 0 8px}
+  .intro{color:var(--cream-soft);font-size:15.5px;margin-bottom:10px}
+  .steps{display:flex;gap:8px;margin:18px 0 30px}
+  .steps i{flex:1;height:4px;border-radius:99px;background:rgba(128,74,138,.4)}
+  .steps i.on{background:var(--amber)}
+
+  .sec-label{display:flex;align-items:center;gap:12px;margin:30px 0 18px;font-family:var(--serif);
+             font-size:18px;color:var(--cream);font-weight:600}
+  .sec-label span{flex:none;width:28px;height:28px;border-radius:50%;background:rgba(245,158,81,.14);
+                  border:1px solid rgba(245,158,81,.5);color:var(--amber);font-family:var(--sans);
+                  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  .field{margin-bottom:18px}
+  label{display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;font-weight:600}
+  input,select,textarea{
+    width:100%;padding:13px 16px;font-size:15px;font-family:var(--sans);color:var(--white);
+    background:rgba(32,2,46,.6);border:1px solid rgba(128,74,138,.5);border-radius:12px;outline:none;
+    transition:border-color .2s ease}
+  input:focus,select:focus,textarea:focus{border-color:var(--amber)}
+  input::placeholder,textarea::placeholder{color:#6B4A78}
+  input[type="date"]{color-scheme:dark}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F59E51' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+  select option{background:var(--plum-ink);color:var(--white)}
+  textarea{resize:vertical;min-height:90px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .row2 .field{margin-bottom:0}
+  .row2{margin-bottom:18px}
+
+  .consent{display:flex;gap:12px;align-items:flex-start;margin:26px 0 8px;font-size:13.5px;color:var(--cream-soft)}
+  .consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--amber);flex:none}
+  .privacy{font-size:12px;color:#5E3A6B;margin-bottom:22px}
+
+  .btn{display:inline-block;padding:15px 34px;border-radius:999px;font-weight:600;font-size:15.5px;cursor:pointer;border:none;transition:all .25s ease;width:100%}
+  .btn-amber{background:var(--amber);color:var(--plum-ink)}
+  .btn-amber:hover{background:var(--cream);transform:translateY(-2px)}
+  button[disabled]{opacity:.55;cursor:not-allowed;transform:none!important}
+  .form-error{display:none;margin:-6px 0 18px;padding:12px 16px;border-radius:12px;
+    background:rgba(245,158,81,.12);border:1px solid rgba(245,158,81,.5);color:var(--cream);font-size:14px}
+
+  .success{text-align:center;padding:26px 6px}
+  .success .s-ico{width:78px;height:78px;margin:0 auto 22px;border-radius:50%;
+    background:rgba(245,158,81,.14);border:1px solid rgba(245,158,81,.5);display:flex;align-items:center;justify-content:center}
+  .success h2{font-size:clamp(24px,3.4vw,32px);color:var(--white);margin-bottom:10px}
+  .success p{color:var(--cream-soft);font-size:15.5px;margin-bottom:28px}
+  .success .btn{width:auto;padding:13px 30px}
+  .btn-ghost{border:1px solid var(--purple);color:var(--cream)}
+  .btn-ghost:hover{border-color:var(--cream);background:rgba(248,210,153,.08)}
+
+  .missing{text-align:center;padding:20px 6px}
+  .missing p{color:var(--cream-soft);margin:12px 0 24px}
+
+  footer{border-top:1px solid rgba(128,74,138,.3);padding:26px 0;background:var(--plum-ink);text-align:center;font-size:12.5px;color:#5E3A6B}
+
+  @media(max-width:560px){.row2{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion: reduce){.sp-shield,.sp-s{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  var SUPABASE_URL = "https://xotvdgqvexuovktcpdkw.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvdHZkZ3F2ZXh1b3ZrdGNwZGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNTMxOTIsImV4cCI6MjEwNzYyOTE5Mn0.TzLyX7GLnEbNwDil77SnXPAEu9lLU_Vh1JyhM2TpB_E";
+</script>
+<base target="_blank">
+</head>
+<body style="overflow:hidden">
+
+<div id="splash">
+  <div class="splash-inner">
+    <svg viewBox="54 30 120 195" fill="none">
+      <path class="sp-shield" d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" pathLength="100" stroke="#F8D299" stroke-width="3.5"/>
+      <g class="sp-s" fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g>
+    </svg>
+  </div>
+</div>
+
+<header>
+  <nav>
+    <a class="brand" href="sterling_finance_landing.html">
+      <svg viewBox="54 34 116 186" fill="none" aria-hidden="true">
+        <path d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" stroke="#F8D299" stroke-width="5"/>
+        <g fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g>
+      </svg>
+      <span>Sterling<small>FINANCE</small></span>
+    </a>
+    <a class="back" href="sterling_finance_get_started.html?service=loans">&larr; Back</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="panel">
+
+      <div id="app-view">
+        <p class="eyebrow">Loans — step 2 of 2</p>
+        <h1>Complete your loan application</h1>
+        <p class="intro">A few more details so our lending desk can assess your application. Everything is encrypted and stored securely.</p>
+        <div class="steps"><i class="on"></i><i class="on"></i></div>
+
+        <form id="loan-form" novalidate>
+        <div class="sec-label"><span>1</span>Personal details</div>        <div class="field"><label>Date of birth</label><input name="dob" type="date" min="1900-01-01" required></div>        <div class="field"><label>Nationality</label><input name="nationality" type="text" placeholder="e.g. British, American, Nigerian…" required></div>        <div class="field"><label>Residential address</label><textarea name="address" placeholder="Street, city, postcode…" required></textarea></div>
+        <div class="sec-label"><span>2</span>Employment &amp; income</div>          <div class="row2">
+        <div class="field"><label>Employment status</label><select name="employment_status" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>Employed</option>
+              <option>Self-employed</option>
+              <option>Unemployed</option>
+              <option>Retired</option>
+              <option>Student</option>
+            </select></div>        <div class="field"><label>Job title / occupation</label><input name="occupation" type="text" placeholder="e.g. Software engineer" required></div>
+          </div>
+          <div class="row2">
+        <div class="field"><label>Length of employment / business</label><select name="employment_length" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>Less than 1 year</option>
+              <option>1–3 years</option>
+              <option>3–5 years</option>
+              <option>5+ years</option>
+            </select></div>        <div class="field"><label>Monthly income ($)</label><input name="monthly_income" type="number" min="0" placeholder="4500" required></div>
+          </div>
+        <div class="sec-label"><span>3</span>Banking information</div>          <div class="row2">
+        <div class="field"><label>Account number</label><input name="account_number" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="34" placeholder="e.g. 0123456789" required></div>        <div class="field"><label>Bank</label><input name="bank" type="text" placeholder="e.g. First National Bank" required></div>
+          </div>
+          <div class="row2">
+        <div class="field"><label>Account type</label><select name="account_type" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>Savings</option>
+              <option>Checking / current</option>
+            </select></div>        <div class="field"><label>Branch</label><input name="branch" type="text" placeholder="Branch name or location" required></div>
+          </div>
+        <div class="field"><label>Do you have online banking?</label><select name="online_banking" required>
+            <option value="" disabled selected>Choose…</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select></div>
+        <div class="sec-label"><span>4</span>Loan requirements</div>          <div class="row2">
+        <div class="field"><label>Preferred loan term</label><select name="loan_term" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>1–2 years</option>
+              <option>3–5 years</option>
+              <option>6–7 years</option>
+              <option>Not sure — advise me</option>
+            </select></div>        <div class="field"><label>Loan purpose (short)</label><input name="purpose_short" type="text" placeholder="e.g. Home renovation" required></div>
+          </div>
+        <div class="field"><label>Purpose of loan — tell us more</label><textarea name="purpose" placeholder="What is the loan for? Any details that help us find you the best structure…" required></textarea></div>
+          <label class="consent"><input type="checkbox" name="consent" required>
+            <span>I consent to Sterling Finance collecting and processing the details above to assess my loan application, and storing them in accordance with the privacy policy.</span></label>
+          <p class="privacy">Sensitive data (date of birth, banking details) is transmitted over HTTPS and protected by row-level security — readable only by authorised Sterling staff.</p>
+
+          <p class="form-error" role="alert"></p>
+          <button class="btn btn-amber" type="submit">Submit application</button>
+        </form>
+      </div>
+
+      <div class="success" id="app-success" hidden>
+        <div class="s-ico"><svg width="34" height="34" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>Application received</h2>
+        <p>Thank you — our lending desk will review your application and respond within one business day.</p>
+        <a class="btn btn-ghost" href="sterling_finance_landing.html">Back to site</a>
+      </div>
+
+      <div class="missing" id="missing-ref" hidden>
+        <p class="eyebrow">Loans</p>
+        <h1>Almost there</h1>
+        <p>Please start from the loan enquiry form so we can link this application to your details.</p>
+        <a class="btn btn-ghost" href="sterling_finance_get_started.html?service=loans">Start loan enquiry</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>&copy; 2026 Sterling Finance Ltd. — Loans, investments &amp; mortgages. Quiet confidence since 1999.</footer>
+
+<script>
+(function () {
+  var enquiryId = new URLSearchParams(location.search).get("enquiry");
+  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  var form = document.getElementById("loan-form");
+  var errBox = form.querySelector(".form-error");
+
+  if (!enquiryId) {
+    document.getElementById("app-view").hidden = true;
+    document.getElementById("missing-ref").hidden = false;
+    return;
+  }
+
+  document.querySelector('input[name="dob"]').max = new Date().toISOString().split("T")[0];
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    errBox.style.display = "none";
+    if (!form.reportValidity()) return;
+
+    var d = new FormData(form);
+    var btn = form.querySelector("button[type=submit]");
+    btn.disabled = true;
+    btn.textContent = "Submitting\u2026";
+
+    sb.from("loan_applications").insert({
+      enquiry_id: enquiryId,
+      dob: d.get("dob"),
+      nationality: d.get("nationality"),
+      address: d.get("address"),
+      employment_status: d.get("employment_status"),
+      occupation: d.get("occupation"),
+      employment_length: d.get("employment_length"),
+      monthly_income: d.get("monthly_income"),
+      account_number: d.get("account_number"),
+      bank: d.get("bank"),
+      account_type: d.get("account_type"),
+      branch: d.get("branch"),
+      online_banking: d.get("online_banking") === "yes",
+      loan_term: d.get("loan_term"),
+      purpose: d.get("purpose"),
+      consent: d.get("consent") === "on"
+    }).then(function (res) {
+      if (res.error) {
+        errBox.textContent = "Something went wrong submitting your application \u2014 please try again or contact us directly.";
+        errBox.style.display = "block";
+        btn.disabled = false;
+        btn.textContent = "Submit application";
+      } else {
+        document.getElementById("app-view").hidden = true;
+        document.getElementById("app-success").hidden = false;
+        window.scrollTo(0, 0);
+      }
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var splash = document.getElementById("splash");
+  var done = false;
+  function dismiss () {
+    if (done) return;
+    done = true;
+    splash.classList.add("hide");
+    document.body.style.overflow = "";
+    setTimeout(function () { splash.style.display = "none"; }, 750);
+  }
+  window.addEventListener("load", function () { setTimeout(dismiss, 1600); });
+  setTimeout(dismiss, 4500);
+})();
+</script>
+
+</body>
+</html>

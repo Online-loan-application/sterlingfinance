@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get started — Sterling Finance</title>
+<meta name="description" content="Start your Sterling Finance journey — loans, mortgages and investments.">
+<style>
+  :root{
+    --plum:#3A0353; --plum-deep:#2A023E; --plum-ink:#20022E;
+    --purple:#804A8A; --cream:#F8D299; --amber:#F59E51;
+    --cream-soft:#F3E3C2; --white:#FDF8EE;
+    --serif:Georgia,'Noto Serif Display','Liberation Serif',serif;
+    --sans:'Noto Sans','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--plum-deep);color:var(--white);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px;width:100%}
+
+  #splash{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(120% 120% at 50% 30%,#3A0353 0%,#2A023E 70%,#20022E 100%);
+    transition:opacity .7s ease}
+  #splash.hide{opacity:0;pointer-events:none}
+  .splash-inner{text-align:center}
+  .splash-inner svg{width:110px;height:auto}
+  .sp-shield{stroke-dasharray:100;stroke-dashoffset:100;opacity:1;animation:sp-draw 2.2s cubic-bezier(.6,.05,.35,1) infinite}
+  .sp-s{opacity:0;transform-box:fill-box;transform-origin:center;animation:sp-s 2.2s ease-in-out infinite}
+  @keyframes sp-draw{0%{stroke-dashoffset:100;opacity:1}42%{stroke-dashoffset:0}82%{opacity:1}96%,100%{opacity:0;stroke-dashoffset:0}}
+  @keyframes sp-s{0%,16%{opacity:0;transform:scale(.5)}26%{opacity:1;transform:scale(1.08)}32%,78%{opacity:1;transform:scale(1)}88%{opacity:0;transform:scale(.85)}100%{opacity:0}}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(42,2,62,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(128,74,138,.35)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:74px;max-width:1140px;margin:0 auto;padding:0 24px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand svg{width:30px;height:46px}
+  .brand span{font-family:var(--serif);font-size:20px;color:var(--cream)}
+  .brand small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.42em;color:var(--purple);font-weight:600}
+  .back{font-size:14px;color:var(--cream-soft);transition:color .2s}
+  .back:hover{color:var(--amber)}
+
+  main{flex:1;display:flex;align-items:center;padding:150px 0 90px;
+       background:radial-gradient(110% 80% at 50% 0%,#47106A 0%,var(--plum-deep) 60%)}
+  .panel{background:linear-gradient(160deg,rgba(128,74,138,.18),rgba(58,3,83,.4));border:1px solid rgba(128,74,138,.45);
+         border-radius:26px;padding:clamp(32px,5vw,52px)}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  h1{font-size:clamp(28px,3.8vw,38px);color:var(--white);margin:14px 0 10px}
+  .intro{color:var(--cream-soft);font-size:15.5px;margin-bottom:34px}
+  .form-head{margin-bottom:26px}
+
+  /* ---------- service picker ---------- */
+  .picker{display:grid;gap:16px;margin-top:8px}
+  .pick{display:flex;align-items:center;gap:18px;width:100%;text-align:left;cursor:pointer;
+        background:rgba(32,2,46,.45);border:1px solid rgba(128,74,138,.5);border-radius:18px;
+        padding:20px 22px;color:var(--white);font-family:var(--sans);transition:all .25s ease}
+  .pick:hover{border-color:rgba(245,158,81,.6);background:rgba(245,158,81,.08);transform:translateY(-3px)}
+  .pick .p-ico{flex:none;width:54px;height:54px;border-radius:16px;background:rgba(245,158,81,.12);
+               border:1px solid rgba(245,158,81,.35);display:flex;align-items:center;justify-content:center}
+  .pick b{display:block;font-family:var(--serif);font-size:19px;color:var(--cream);font-weight:600}
+  .pick span{font-size:13.5px;color:var(--purple)}
+  .pick .p-arrow{margin-left:auto;color:var(--amber);font-size:20px}
+
+  /* ---------- forms ---------- */
+  .field{margin-bottom:20px}
+  label{display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;font-weight:600}
+  input,select,textarea{
+    width:100%;padding:14px 16px;font-size:15px;font-family:var(--sans);color:var(--white);
+    background:rgba(32,2,46,.6);border:1px solid rgba(128,74,138,.5);border-radius:12px;outline:none;
+    transition:border-color .2s ease}
+  input:focus,select:focus,textarea:focus{border-color:var(--amber)}
+  input::placeholder,textarea::placeholder{color:#6B4A78}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F59E51' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+  select option{background:var(--plum-ink);color:var(--white)}
+  textarea{resize:vertical;min-height:100px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+  .btn{display:inline-block;padding:15px 34px;border-radius:999px;font-weight:600;font-size:15.5px;cursor:pointer;border:none;transition:all .25s ease;width:100%}
+  .btn-amber{background:var(--amber);color:var(--plum-ink)}
+  .btn-amber:hover{background:var(--cream);transform:translateY(-2px)}
+  .switch{margin-top:16px;text-align:center;font-size:13.5px}
+  .switch a{color:var(--purple);transition:color .2s}
+  .switch a:hover{color:var(--amber)}
+  .note{margin-top:18px;font-size:12.5px;color:#5E3A6B;text-align:center}
+
+  footer{border-top:1px solid rgba(128,74,138,.3);padding:26px 0;background:var(--plum-ink);text-align:center;font-size:12.5px;color:#5E3A6B}
+
+  @media(max-width:560px){.row2{grid-template-columns:1fr}}
+
+  /* ---------- submit states ---------- */
+  button[disabled]{opacity:.55;cursor:not-allowed;transform:none!important}
+  .success{text-align:center;padding:26px 6px}
+  .success .s-ico{width:78px;height:78px;margin:0 auto 22px;border-radius:50%;
+    background:rgba(245,158,81,.14);border:1px solid rgba(245,158,81,.5);
+    display:flex;align-items:center;justify-content:center}
+  .success h2{font-size:clamp(24px,3.4vw,32px);color:var(--white);margin-bottom:10px}
+  .success p{color:var(--cream-soft);font-size:15.5px;margin-bottom:28px}
+  .success .btn{width:auto;padding:13px 30px}
+  .form-error{display:none;margin:-6px 0 18px;padding:12px 16px;border-radius:12px;
+    background:rgba(245,158,81,.12);border:1px solid rgba(245,158,81,.5);
+    color:var(--cream);font-size:14px}
+  @media (prefers-reduced-motion: reduce){.sp-shield,.sp-s{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  /* ---- Supabase credentials: paste yours between the quotes ----
+     Find them in: Supabase dashboard -> Project Settings -> API        */
+  var SUPABASE_URL = "https://xotvdgqvexuovktcpdkw.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvdHZkZ3F2ZXh1b3ZrdGNwZGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNTMxOTIsImV4cCI6MjEwNzYyOTE5Mn0.TzLyX7GLnEbNwDil77SnXPAEu9lLU_Vh1JyhM2TpB_E";
+</script>
+<base target="_blank">
+</head>
+<body style="overflow:hidden">
+
+<div id="splash">
+  <div class="splash-inner">
+    <svg viewBox="54 30 120 195" fill="none">
+      <path class="sp-shield" d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" pathLength="100" stroke="#F8D299" stroke-width="3.5"/>
+      <g class="sp-s" fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g>
+    </svg>
+  </div>
+</div>
+
+<header>
+  <nav>
+    <a class="brand" href="sterling_finance_landing.html">
+      <svg viewBox="54 34 116 186" fill="none" aria-hidden="true">
+        <path d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" stroke="#F8D299" stroke-width="5"/>
+        <g fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g>
+      </svg>
+      <span>Sterling<small>FINANCE</small></span>
+    </a>
+    <a class="back" href="sterling_finance_landing.html">&larr; Back to site</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="panel">
+
+      <div id="picker-view">
+        <p class="eyebrow">Get started</p>
+        <h1>What can we help you with?</h1>
+        <p class="intro">Pick a service and we’ll ask for just the details that matter. Two minutes now, a thirty-minute conversation next — no obligation, no jargon.</p>
+        <div class="picker">
+          <button class="pick" type="button" data-pick="loans">
+            <span class="p-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.5v.01M18 14.5v.01"/></svg></span>
+            <span><b>Loans</b><span>Personal, business &amp; bridging — from 4.8% APR</span></span>
+            <span class="p-arrow">&rarr;</span>
+          </button>
+          <button class="pick" type="button" data-pick="mortgages">
+            <span class="p-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
+            <span><b>Mortgages</b><span>First home, remortgage &amp; buy-to-let — 90+ lenders</span></span>
+            <span class="p-arrow">&rarr;</span>
+          </button>
+          <button class="pick" type="button" data-pick="investments">
+            <span class="p-ico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5.2-5.2 3.6 3.2L20 7"/><path d="M15 7h5v5"/></svg></span>
+            <span><b>Investments</b><span>ISA, SIPP &amp; bespoke portfolios — 0.65% flat fee</span></span>
+            <span class="p-arrow">&rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <form class="svc-form" id="form-loans" data-service="loans" hidden>
+        <div class="form-head">
+          <p class="eyebrow" id="eyebrow-loans"></p>
+          <h1 id="title-loans">Let’s talk about your loan</h1>
+          <p class="intro">Tell us how much you need and what it’s for. We’ll compare 90+ lenders and come back with one clear recommendation — most decisions land within 48 hours.</p>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Full name</label>
+            <input name="name" type="text" placeholder="Jordan Ellis" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input name="email" type="email" placeholder="jordan@example.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Phone (optional)</label>
+          <input name="phone" type="tel" placeholder="+1 555 000 0000">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Loan type</label>
+            <select name="type" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>Personal loan</option>
+              <option>Business loan</option>
+              <option>Bridging loan</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Loan amount ($)</label>
+            <input name="amount" type="number" min="0" placeholder="50000" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Preferred term</label>
+          <select name="term" required>
+            <option value="" disabled selected>Choose…</option>
+            <option>1–2 years</option>
+            <option>3–5 years</option>
+            <option>6–7 years</option>
+            <option>Not sure — advise me</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Anything we should know? (optional)</label>
+          <textarea name="message" placeholder="Timeline, goals, questions…"></textarea>
+        </div>
+        <p class="form-error" role="alert"></p>
+        <button class="btn btn-amber" type="submit">Get started</button>
+        <p class="switch"><a href="#" class="switch-link" data-switch>Choose a different service</a></p>
+      </form>
+      <form class="svc-form" id="form-mortgages" data-service="mortgages" hidden>
+        <div class="form-head">
+          <p class="eyebrow" id="eyebrow-mortgages"></p>
+          <h1 id="title-mortgages">Let’s find your mortgage</h1>
+          <p class="intro">Whether it’s a first home, a remortgage or a buy-to-let, tell us the shape of the purchase and we’ll search the whole market — an agreement in principle within 24 hours.</p>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Full name</label>
+            <input name="name" type="text" placeholder="Jordan Ellis" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input name="email" type="email" placeholder="jordan@example.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Phone (optional)</label>
+          <input name="phone" type="tel" placeholder="+1 555 000 0000">
+        </div>
+        <div class="field">
+          <label>Mortgage type</label>
+          <select name="type" required>
+            <option value="" disabled selected>Choose…</option>
+            <option>First home</option>
+            <option>Remortgage</option>
+            <option>Buy-to-let</option>
+            <option>Self-build</option>
+          </select>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Property value ($)</label>
+            <input name="amount" type="number" min="0" placeholder="350000" required>
+          </div>
+          <div class="field">
+            <label>Deposit available ($)</label>
+            <input name="deposit" type="number" min="0" placeholder="70000">
+          </div>
+        </div>
+        <div class="field">
+          <label>When are you hoping to buy?</label>
+          <select name="timeline" required>
+            <option value="" disabled selected>Choose…</option>
+            <option>Within 3 months</option>
+            <option>3–6 months</option>
+            <option>6–12 months</option>
+            <option>Just browsing</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Anything we should know? (optional)</label>
+          <textarea name="message" placeholder="Timeline, goals, questions…"></textarea>
+        </div>
+        <p class="form-error" role="alert"></p>
+        <button class="btn btn-amber" type="submit">Get started</button>
+        <p class="switch"><a href="#" class="switch-link" data-switch>Choose a different service</a></p>
+      </form>
+      <form class="svc-form" id="form-investments" data-service="investments" hidden>
+        <div class="form-head">
+          <p class="eyebrow" id="eyebrow-investments"></p>
+          <h1 id="title-investments">Let’s build your portfolio</h1>
+          <p class="intro">Tell us where you’re starting from and what you’re building toward. We’ll propose a diversified, tax-efficient portfolio designed to compound quietly for decades.</p>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Full name</label>
+            <input name="name" type="text" placeholder="Jordan Ellis" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input name="email" type="email" placeholder="jordan@example.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Phone (optional)</label>
+          <input name="phone" type="tel" placeholder="+1 555 000 0000">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Focus</label>
+            <select name="type" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>ISA</option>
+              <option>SIPP / retirement</option>
+              <option>General investment</option>
+              <option>Not sure — advise me</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Amount to invest ($)</label>
+            <input name="amount" type="number" min="0" placeholder="100000" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Time horizon</label>
+            <select name="horizon" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>5+ years</option>
+              <option>10+ years</option>
+              <option>20+ years</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Investing experience</label>
+            <select name="experience" required>
+              <option value="" disabled selected>Choose…</option>
+              <option>First time</option>
+              <option>Some experience</option>
+              <option>Experienced</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Anything we should know? (optional)</label>
+          <textarea name="message" placeholder="Timeline, goals, questions…"></textarea>
+        </div>
+        <p class="form-error" role="alert"></p>
+        <button class="btn btn-amber" type="submit">Get started</button>
+        <p class="switch"><a href="#" class="switch-link" data-switch>Choose a different service</a></p>
+      </form>
+
+      <div class="success" id="form-success" hidden>
+        <div class="s-ico"><svg width="34" height="34" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>Thank you — enquiry received</h2>
+        <p>A named advisor will be in touch within one business day. Talk soon.</p>
+        <a class="btn btn-ghost" href="sterling_finance_landing.html">Back to site</a>
+      </div>
+
+      <p class="note">Submissions are stored securely. We reply within one business day.</p>
+    </div>
+  </div>
+</main>
+
+<footer>&copy; 2026 Sterling Finance Ltd. — Loans, investments &amp; mortgages. Quiet confidence since 1999.</footer>
+
+<script>
+(function () {
+  var EYEBROWS = { loans: "Loans", mortgages: "Mortgages", investments: "Investments" };
+  var picker = document.getElementById("picker-view");
+  var splash = document.getElementById("splash");
+  var forms = {
+    loans: document.getElementById("form-loans"),
+    mortgages: document.getElementById("form-mortgages"),
+    investments: document.getElementById("form-investments")
+  };
+
+  function showForm (key, updateUrl) {
+    picker.hidden = true;
+    document.getElementById("form-success").hidden = true;
+    Object.keys(forms).forEach(function (k) { forms[k].hidden = (k !== key); });
+    document.getElementById("eyebrow-" + key).textContent = EYEBROWS[key];
+    if (updateUrl && history.replaceState) history.replaceState(null, "", "?service=" + key);
+    document.title = EYEBROWS[key] + " \u2014 Get started | Sterling Finance";
+    window.scrollTo(0, 0);
+  }
+
+  function showPicker () {
+    picker.hidden = false;
+    document.getElementById("form-success").hidden = true;
+    Object.keys(forms).forEach(function (k) { forms[k].hidden = true; });
+    if (history.replaceState) history.replaceState(null, "", location.pathname);
+    document.title = "Get started \u2014 Sterling Finance";
+  }
+
+  /* ---- sterling loader overlay during processing ---- */
+  function showLoader () {
+    splash.style.display = "flex";
+    splash.classList.remove("hide");
+    document.body.style.overflow = "hidden";
+  }
+  function hideLoader () {
+    splash.classList.add("hide");
+    document.body.style.overflow = "";
+    setTimeout(function () { splash.style.display = "none"; }, 750);
+  }
+
+  /* ---- UUID (client-generated so no SELECT permission is needed) ---- */
+  function uuid () {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-pick]"), function (btn) {
+    btn.addEventListener("click", function () { showForm(btn.getAttribute("data-pick"), true); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-switch]"), function (link) {
+    link.addEventListener("click", function (e) { e.preventDefault(); showPicker(); });
+  });
+
+  var key = new URLSearchParams(location.search).get("service");
+  if (key && forms[key]) showForm(key, false);
+
+  var sb = null;
+  try {
+    if (SUPABASE_URL.indexOf("YOUR-PROJECT-REF") === -1 && SUPABASE_ANON_KEY.indexOf("YOUR-ANON") === -1) {
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+  } catch (e) { sb = null; }
+
+  function fieldLabel (el) {
+    var l = el.closest(".field");
+    return l ? l.querySelector("label").textContent : el.name;
+  }
+
+  function mailtoFallback (form) {
+    var d = new FormData(form);
+    var lines = ["Name: " + (d.get("name") || ""), "Email: " + (d.get("email") || ""), "Phone: " + (d.get("phone") || "\u2014")];
+    form.querySelectorAll("select,input,textarea").forEach(function (el) {
+      if (!el.name || ["name", "email", "phone", "message"].indexOf(el.name) >= 0) return;
+      if (!el.value) return;
+      lines.push(fieldLabel(el) + ": " + (el.type === "number" ? "$" + el.value : el.value));
+    });
+    if (d.get("message")) lines.push("", d.get("message"));
+    window.location.href = "mailto:hello@sterlingfinance.example?subject="
+      + encodeURIComponent("New " + form.getAttribute("data-service") + " enquiry")
+      + "&body=" + encodeURIComponent(lines.join("\n"));
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".svc-form"), function (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var errBox = form.querySelector(".form-error");
+      errBox.style.display = "none";
+      if (!form.reportValidity()) return;
+      if (!sb) { mailtoFallback(form); return; }
+
+      var d = new FormData(form);
+      var details = {};
+      form.querySelectorAll("select,input,textarea").forEach(function (el) {
+        if (el.name && ["name", "email", "phone", "message"].indexOf(el.name) < 0 && el.value) {
+          details[el.name] = el.value;
+        }
+      });
+
+      var enquiryId = uuid();            // sent WITH the insert -> no .select() needed
+      var btn = form.querySelector("button[type=submit]");
+      btn.disabled = true;
+      showLoader();                      // sterling loader while processing
+
+      sb.from("enquiries").insert({
+        id: enquiryId,
+        service: form.getAttribute("data-service"),
+        name: d.get("name"),
+        email: d.get("email"),
+        phone: d.get("phone") || null,
+        message: d.get("message") || null,
+        details: details
+      }).then(function (res) {
+        if (res.error) {
+          hideLoader();
+          errBox.textContent = "Something went wrong sending your enquiry \u2014 please try again or email us directly.";
+          errBox.style.display = "block";
+          btn.disabled = false;
+        } else if (form.getAttribute("data-service") === "loans") {
+          /* loader stays up through the handoff to step 2 */
+          setTimeout(function () {
+            window.location.href = "sterling_loan_application.html?enquiry=" + encodeURIComponent(enquiryId);
+          }, 1400);
+        } else {
+          hideLoader();
+          form.hidden = true;
+          picker.hidden = true;
+          document.getElementById("form-success").hidden = false;
+          window.scrollTo(0, 0);
+        }
+      });
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var splash = document.getElementById("splash");
+  var done = false;
+  function dismiss () {
+    if (done) return;
+    done = true;
+    splash.classList.add("hide");
+    document.body.style.overflow = "";
+    setTimeout(function () { splash.style.display = "none"; }, 750);
+  }
+  window.addEventListener("load", function () { setTimeout(dismiss, 1600); });
+  setTimeout(dismiss, 4500);
+})();
+</script>
+
+</body>
+</html>
