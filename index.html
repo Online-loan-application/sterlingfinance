@@ -520,5 +520,32 @@ window.smartsupp||(function(d) {
 })();
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  var SUPABASE_URL = "https://xotvdgqvexuovktcpdkw.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvdHZkZ3F2ZXh1b3ZrdGNwZGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNTMxOTIsImV4cCI6MjEwNzYyOTE5Mn0.TzLyX7GLnEbNwDil77SnXPAEu9lLU_Vh1JyhM2TpB_E";
+  try {
+    var profiles = JSON.parse(localStorage.getItem("sf_profiles") || "{}");
+    var types = Object.keys(profiles);
+    if (!types.length) return;
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    var i = 0;
+    (function next () {
+      if (i >= types.length) return;
+      var p = profiles[types[i++]];
+      sb.rpc("app_check", { p_id: p.id, p_email: p.email }).then(function (r) {
+        var row = r.data && r.data[0];
+        // if (!row) return next();
+        // if (row.status === "approved" && row.type === "loan") {
+        //   window.location.replace("sterling_loan_approval.html");
+        // } else {
+        //   window.location.replace("sterling_status.html");
+        // }
+      });
+    })();
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>

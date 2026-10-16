@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online banking — Sterling Finance</title>
+<meta name="description" content="Your Sterling Finance loan account.">
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = '858a592b79d740b12b1c26d2382598d9dbc1a4cd';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+
+<style>
+  :root{
+    --plum:#3A0353; --plum-deep:#2A023E; --plum-ink:#20022E;
+    --purple:#804A8A; --cream:#F8D299; --amber:#F59E51;
+    --cream-soft:#F3E3C2; --white:#FDF8EE;
+    --serif:Georgia,'Noto Serif Display','Liberation Serif',serif;
+    --sans:'Noto Sans','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--plum-deep);color:var(--white);line-height:1.6;min-height:100vh;overflow-x:hidden}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.15}
+  a{color:inherit;text-decoration:none}
+  button{font-family:var(--sans)}
+
+  #splash{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(120% 120% at 50% 30%,#3A0353 0%,#2A023E 70%,#20022E 100%);
+    transition:opacity .7s ease}
+  #splash.hide{opacity:0;pointer-events:none}
+  .splash-inner{text-align:center}
+  .splash-inner svg{width:110px;height:auto}
+  .sp-shield{stroke-dasharray:100;stroke-dashoffset:100;opacity:1;animation:sp-draw 2.2s cubic-bezier(.6,.05,.35,1) infinite}
+  .sp-s{opacity:0;transform-box:fill-box;transform-origin:center;animation:sp-s 2.2s ease-in-out infinite}
+  @keyframes sp-draw{0%{stroke-dashoffset:100;opacity:1}42%{stroke-dashoffset:0}82%{opacity:1}96%,100%{opacity:0;stroke-dashoffset:0}}
+  @keyframes sp-s{0%,16%{opacity:0;transform:scale(.5)}26%{opacity:1;transform:scale(1.08)}32%,78%{opacity:1;transform:scale(1)}88%{opacity:0;transform:scale(.85)}100%{opacity:0}}
+
+  /* ---------- sidebar ---------- */
+  .sidebar{position:fixed;top:0;left:0;bottom:0;width:258px;z-index:70;display:flex;flex-direction:column;
+    background:rgba(32,2,46,.98);border-right:1px solid rgba(128,74,138,.35);padding:24px 16px 18px;
+    transition:transform .3s ease}
+  .sb-brand{display:flex;align-items:center;gap:11px;padding:0 10px 22px;border-bottom:1px solid rgba(128,74,138,.3);margin-bottom:16px}
+  .sb-brand svg{width:26px;height:42px}
+  .sb-brand span{font-family:var(--serif);font-size:19px;color:var(--cream)}
+  .sb-brand small{display:block;font-family:var(--sans);font-size:9px;letter-spacing:.42em;color:var(--purple);font-weight:600}
+  .sb-nav{display:flex;flex-direction:column;gap:4px;flex:1}
+  .sb-item{display:flex;align-items:center;gap:13px;width:100%;text-align:left;padding:11px 14px;border-radius:12px;
+    background:transparent;border:1px solid transparent;color:var(--cream-soft);font-size:14.5px;font-weight:500;
+    cursor:pointer;transition:all .2s ease}
+  .sb-item:hover{background:rgba(245,158,81,.07);color:var(--cream)}
+  .sb-item.on{background:rgba(245,158,81,.13);border-color:rgba(245,158,81,.45);color:var(--amber)}
+  .sb-foot{border-top:1px solid rgba(128,74,138,.3);padding-top:14px}
+  .sb-foot .sb-item{color:var(--purple)}
+  .sb-foot .sb-item:hover{color:var(--amber)}
+
+  .sb-overlay{position:fixed;inset:0;background:rgba(10,0,18,.6);z-index:65;opacity:0;pointer-events:none;transition:opacity .3s ease}
+
+  /* ---------- mobile topbar ---------- */
+  .topbar{display:none;justify-content:space-between;position:fixed;top:0;left:0;right:0;height:64px;z-index:60;
+    background:rgba(42,2,62,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(128,74,138,.35);
+    align-items:center;gap:14px;padding:0 18px}
+  .burger{width:40px;height:40px;border-radius:12px;background:transparent;border:1px solid var(--purple);
+    color:var(--cream);cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+  /* ---------- main ---------- */
+  .main{margin-left:258px;padding:36px 34px 70px;min-height:100vh;
+    background:radial-gradient(110% 70% at 60% 0%,#47106A 0%,var(--plum-deep) 55%)}
+  .view{max-width:720px}
+  .view[hidden]{display:none}
+  .eyebrow{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);font-weight:600}
+  h1{font-size:clamp(24px,3.2vw,32px);color:var(--white);margin:12px 0 22px}
+
+  /* ---------- bank card ---------- */
+  .bank-card{position:relative;border-radius:26px;padding:30px 28px 26px;overflow:hidden;
+    background:linear-gradient(135deg,#4A0B66 0%,#3A0353 45%,#20022E 100%);
+    border:1px solid rgba(248,210,153,.28);box-shadow:0 34px 70px rgba(0,0,0,.5);margin-bottom:16px}
+  .bank-card::before{content:"";position:absolute;width:280px;height:280px;border-radius:50%;
+    background:rgba(245,158,81,.12);top:-120px;right:-100px;pointer-events:none}
+  .bank-card::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+    background:rgba(128,74,138,.30);bottom:-130px;left:-80px;pointer-events:none}
+  .bc-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1}
+  .bc-brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);color:var(--cream);font-size:18px}
+  .bc-brand svg{width:24px;height:38px}
+  .bc-type{font-family:var(--sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--purple);font-weight:700}
+  .bc-chip{position:relative;z-index:1;width:46px;height:34px;border-radius:7px;margin-top:22px;
+    background:linear-gradient(135deg,var(--cream),var(--amber));opacity:.92}
+  .bc-num{position:relative;z-index:1;font-family:monospace;letter-spacing:.14em;color:var(--white);
+    font-size:clamp(16px,4.6vw,21px);margin:18px 0 20px}
+  .bc-row{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .bc-name small{display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--purple);margin-bottom:3px}
+  .bc-name b{text-transform:uppercase;font-size:14px;letter-spacing:.08em;color:var(--cream-soft);font-weight:600}
+  .bc-balance{text-align:right}
+  .bc-balance small{display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--purple);margin-bottom:2px}
+  .bc-balance b{font-family:var(--serif);font-size:clamp(28px,6.5vw,38px);color:var(--amber);font-weight:600;line-height:1.05}
+  .bc-status{position:relative;z-index:1;margin-top:16px}
+  .status-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;
+    font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .st-pending{color:var(--amber);border:1px solid rgba(245,158,81,.55);background:rgba(245,158,81,.12)}
+  .st-approved{color:#8FE3A8;border:1px solid rgba(143,227,168,.55);background:rgba(143,227,168,.1)}
+  .st-declined{color:#F2A0A0;border:1px solid rgba(242,160,160,.55);background:rgba(242,160,160,.1)}
+
+  /* ---------- stats & actions ---------- */
+  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 26px}
+  .mini{background:linear-gradient(160deg,rgba(128,74,138,.16),rgba(58,3,83,.35));
+    border:1px solid rgba(128,74,138,.4);border-radius:16px;padding:15px 18px}
+  .mini small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple)}
+  .mini b{font-family:var(--serif);font-size:18px;color:var(--cream);font-weight:600}
+
+  .qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:30px}
+  .qa{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 8px;border-radius:18px;
+    background:linear-gradient(160deg,rgba(128,74,138,.14),rgba(58,3,83,.3));border:1px solid rgba(128,74,138,.4);
+    color:var(--cream-soft);font-size:13px;font-weight:600;cursor:pointer;transition:all .25s ease}
+  .qa:hover{transform:translateY(-4px);border-color:rgba(245,158,81,.55);color:var(--cream)}
+
+  /* ---------- generic panels ---------- */
+  .panel{background:linear-gradient(160deg,rgba(128,74,138,.16),rgba(58,3,83,.35));
+    border:1px solid rgba(128,74,138,.4);border-radius:20px;padding:26px 28px;margin-bottom:20px}
+  .panel h3{color:var(--cream);font-size:19px;margin-bottom:8px}
+  .panel p{color:var(--cream-soft);font-size:14.5px}
+  .dlist{margin-top:6px}
+  .drow{display:flex;justify-content:space-between;gap:18px;padding:11px 4px;
+    border-bottom:1px solid rgba(128,74,138,.25);font-size:14px}
+  .drow span{color:var(--purple);flex:none}
+  .drow b{color:var(--cream-soft);font-weight:500;text-align:right;word-break:break-word}
+  .stmt{display:flex;justify-content:space-between;gap:14px;padding:13px 4px;border-bottom:1px solid rgba(128,74,138,.25);font-size:14px;align-items:center}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tile{background:linear-gradient(160deg,rgba(128,74,138,.16),rgba(58,3,83,.35));
+    border:1px solid rgba(128,74,138,.4);border-radius:16px;padding:14px 18px;min-width:0}
+  .tile small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:4px}
+  .tile b{font-family:var(--serif);font-size:15.5px;color:var(--cream);font-weight:600;word-break:break-word}
+  .stmt small{display:block;color:var(--purple);font-size:12px}
+  .stmt b{font-family:var(--serif);font-size:16px}
+  .cr{color:#8FE3A8}
+  .idbox{display:flex;align-items:center;gap:10px;background:rgba(32,2,46,.6);border:1px solid rgba(245,158,81,.4);
+    border-radius:12px;padding:12px 16px;margin-top:18px}
+  .idbox code{flex:1;font-family:monospace;font-size:13.5px;color:var(--amber);word-break:break-all}
+  .copy{padding:7px 16px;border-radius:99px;background:transparent;border:1px solid var(--purple);
+    color:var(--cream);font-size:12.5px;cursor:pointer;transition:all .2s}
+  .copy:hover{border-color:var(--cream)}
+  .btn{display:inline-block;padding:13px 28px;border-radius:999px;font-weight:600;font-size:14.5px;cursor:pointer;
+    border:1px solid transparent;transition:all .25s ease;text-align:center}
+  .btn-amber{background:var(--amber);color:var(--plum-ink)}
+  .btn-amber:hover{background:var(--cream)}
+  .btn-ghost{border-color:var(--purple);color:var(--cream);background:transparent}
+  .btn-ghost:hover{border-color:var(--cream)}
+
+  .toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,20px);z-index:200;
+    background:rgba(32,2,46,.97);border:1px solid rgba(245,158,81,.55);color:var(--cream);
+    padding:12px 24px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:all .35s ease;
+    max-width:88vw;text-align:center}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media(max-width:900px){
+    .sidebar{transform:translateX(-100%)}
+    .sidebar.open{transform:none}
+    .sb-overlay.show{opacity:1;pointer-events:auto}
+    .topbar{display:flex}
+    .main{margin-left:0;padding:88px 20px 60px}
+    .mini-stats{grid-template-columns:1fr 1fr}
+    .qa-grid{grid-template-columns:1fr 1fr}
+    .tiles{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion: reduce){.sp-shield,.sp-s{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  var SUPABASE_URL = "https://xotvdgqvexuovktcpdkw.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvdHZkZ3F2ZXh1b3ZrdGNwZGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNTMxOTIsImV4cCI6MjEwNzYyOTE5Mn0.TzLyX7GLnEbNwDil77SnXPAEu9lLU_Vh1JyhM2TpB_E";
+</script>
+<base target="_blank">
+</head>
+<body style="overflow:hidden">
+
+<div id="splash">
+  <div class="splash-inner">
+    <svg viewBox="54 30 120 195" fill="none">
+      <path class="sp-shield" d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" pathLength="100" stroke="#F8D299" stroke-width="3.5"/>
+      <g class="sp-s" fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g>
+    </svg>
+  </div>
+</div>
+
+<!-- mobile topbar -->
+<div class="topbar">
+  <div class="sb-brand" style="border:none;padding:0;margin:0">
+    <svg viewBox="54 34 116 186" fill="none"><path d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" stroke="#F8D299" stroke-width="5"/><g fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g></svg>
+    <div><span>Sterling</span><small>FINANCE</small></div>
+  </div>
+  <button class="burger" id="burger" type="button" aria-label="Menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+</div>
+
+<div class="sb-overlay" id="sb-overlay"></div>
+
+<!-- sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <svg viewBox="54 34 116 186" fill="none"><path d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" stroke="#F8D299" stroke-width="5"/><g fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g></svg>
+    <div><span>Sterling</span><small>FINANCE</small></div>
+  </div>
+  <nav class="sb-nav">
+    <button class="sb-item on" data-view="overview" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg><span>Overview</span></button>
+    <button class="sb-item" data-view="withdraw" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg><span>Withdraw</span></button>
+    <button class="sb-item" data-view="deposit" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M7 14l5-5 5 5"/><path d="M4 3h16"/></svg><span>Deposit</span></button>
+    <button class="sb-item" data-view="transfer" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13"/><path d="M14 4l4 4-4 4"/><path d="M20 16H7"/><path d="M10 12l-4 4 4 4"/></svg><span>Transfer</span></button>
+    <button class="sb-item" data-view="statements" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 16h7"/></svg><span>Statements</span></button>
+    <button class="sb-item" data-view="details" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8v.01"/></svg><span>Application details</span></button>
+  </nav>
+  <div class="sb-foot">
+    <button class="sb-item" id="sb-signout" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg><span>Sign out</span></button>
+  </div>
+</aside>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <section class="view" id="view-overview">
+    <div class="bank-card">
+      <div class="bc-top">
+        <div class="bc-brand">
+          <svg viewBox="54 34 116 186" fill="none" aria-hidden="true"><path d="M112 44 L160 60 V132 C160 172 140 196 112 210 C84 196 64 172 64 132 V60 Z" stroke="#F8D299" stroke-width="6"/><g fill="#F59E51"><g transform="translate(112 121.46) scale(0.06642 -0.06642) translate(-278.50 -357.00)"><path d="M256 -10Q180 -10 131.5 10.0Q83 30 60.0 62.5Q37 95 37 131Q37 174 65.5 194.0Q94 214 134 214Q134 132 151.0 85.0Q168 38 199.0 19.0Q230 0 272 0Q334 0 373.0 34.0Q412 68 412 136Q412 182 392.5 211.5Q373 241 334.5 263.5Q296 286 239 311Q150 349 101.5 397.5Q53 446 53 529Q53 620 117.5 672.0Q182 724 294 724Q386 724 439.0 690.0Q492 656 492 609Q492 576 464.5 554.5Q437 533 385 533Q385 625 360.0 669.0Q335 713 274 713Q243 713 216.5 701.0Q190 689 173.0 661.5Q156 634 156 588Q156 546 173.5 516.5Q191 487 229.0 463.0Q267 439 330 412Q391 386 433.5 357.5Q476 329 498.0 291.5Q520 254 520 201Q520 106 451.0 48.0Q382 -10 256 -10Z"/></g></g></svg>
+          <div>Sterling<br><span class="bc-type">Loan account</span></div>
+        </div>
+      </div>
+      <div class="bc-chip"></div>
+      <div class="bc-num" id="bc-num">···· ···· ···· ····</div>
+      <div class="bc-row">
+        <div class="bc-name"><small>Account holder</small><b id="bc-name">—</b></div>
+        <div class="bc-balance"><small id="bc-balance-label">Requested amount</small><b id="bc-balance">$0</b></div>
+      </div>
+      <div class="bc-status"><span class="status-pill st-pending" id="cd-pill"><span>&#9679;</span> <span id="cd-status">Pending</span></span></div>
+    </div>
+
+    <div class="mini-stats">
+      <div class="mini"><small>Monthly repayment</small><b id="ms-repay">—</b></div>
+      <div class="mini"><small>Loan term</small><b id="ms-term">—</b></div>
+      <div class="mini"><small>Monthly income</small><b id="ms-income">—</b></div>
+    </div>
+
+    <div class="qa-grid">
+      <button class="qa" data-go="withdraw" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>Withdraw</button>
+      <button class="qa" data-go="deposit" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M7 14l5-5 5 5"/><path d="M4 3h16"/></svg>Deposit</button>
+      <button class="qa" data-go="transfer" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13"/><path d="M14 4l4 4-4 4"/><path d="M20 16H7"/><path d="M10 12l-4 4 4 4"/></svg>Transfer</button>
+      <button class="qa" data-go="statements" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E51" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 16h7"/></svg>Statements</button>
+    </div>
+
+    <div class="idbox">
+      <code id="cd-code"></code>
+      <button class="copy" id="cd-copy" type="button">Copy ID</button>
+    </div>
+  </section>
+
+  <!-- WITHDRAW / DEPOSIT / TRANSFER -->
+  <section class="view" id="view-withdraw" hidden>
+    <p class="eyebrow">Banking</p><h1>Withdraw funds</h1>
+    <div class="panel"><h3>Withdrawals unlock after disbursement</h3>
+      <p>Once your loan is approved and disbursed to your linked account, you’ll be able to withdraw funds here. We’ll notify you by email the moment it’s ready.</p>
+      <p style="margin-top:18px"><button class="btn btn-ghost" data-soon type="button">Notify me when available</button></p>
+    </div>
+  </section>
+  <section class="view" id="view-deposit" hidden>
+    <p class="eyebrow">Banking</p><h1>Deposit funds</h1>
+    <div class="panel"><h3>Deposits unlock after disbursement</h3>
+      <p>Top up your loan account or make repayments here once your account is active. We’ll notify you by email when it’s ready.</p>
+      <p style="margin-top:18px"><button class="btn btn-ghost" data-soon type="button">Notify me when available</button></p>
+    </div>
+  </section>
+  <section class="view" id="view-transfer" hidden>
+    <p class="eyebrow">Banking</p><h1>Transfer funds</h1>
+    <div class="panel"><h3>Transfers unlock after disbursement</h3>
+      <p>Move money between your Sterling account and linked banks here once your account is active. We’ll notify you by email when it’s ready.</p>
+      <p style="margin-top:18px"><button class="btn btn-ghost" data-soon type="button">Notify me when available</button></p>
+    </div>
+  </section>
+
+  <!-- STATEMENTS -->
+  <section class="view" id="view-statements" hidden>
+    <p class="eyebrow">Banking</p><h1>Statements</h1>
+    <div class="panel" style="padding:8px 22px 14px"><div id="cd-stmts"></div></div>
+  </section>
+
+  <!-- APPLICATION DETAILS -->
+  <section class="view" id="view-details" hidden>
+    <p class="eyebrow">My application</p><h1>Application details</h1>
+    <div class="tiles" id="cd-details"></div>
+  </section>
+
+  <!-- signed-out state -->
+  <section class="view" id="view-none" hidden>
+    <p class="eyebrow">My account</p>
+    <h1>Sign in required</h1>
+    <p style="color:var(--cream-soft);font-size:15.5px;margin-bottom:26px">Verify your email and application ID to view your loan account.</p>
+    <a class="btn btn-amber" href="sterling_loan_approval.html">Verify now</a>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<!-- <footer style="border-top:1px solid rgba(128,74,138,.3);padding:22px 24px;background:var(--plum-ink);text-align:center;font-size:12.5px;color:#5E3A6B;margin-left:258px">
+  &copy; 2026 Sterling Finance Ltd. — Loans, investments &amp; mortgages. Quiet confidence since 1999.
+</footer> -->
+
+<script>
+(function () {
+  var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  var session = null;
+  try { session = JSON.parse(sessionStorage.getItem("sf_session") || "null"); } catch (e) {}
+  if (!session) {
+    try {
+      var p = JSON.parse(localStorage.getItem("sf_profiles") || "{}");
+      if (p.loan) session = { id: p.loan.id, email: p.loan.email };
+    } catch (e2) {}
+  }
+
+  /* ---------- view switching ---------- */
+  var sidebar = document.getElementById("sidebar");
+  var overlay = document.getElementById("sb-overlay");
+  function closeSb () { sidebar.classList.remove("open"); overlay.classList.remove("show"); }
+  document.getElementById("burger").addEventListener("click", function () {
+    sidebar.classList.add("open"); overlay.classList.add("show");
+  });
+  overlay.addEventListener("click", closeSb);
+
+  function go (name) {
+    document.querySelectorAll(".view").forEach(function (v) { v.hidden = true; });
+    var el = document.getElementById("view-" + name);
+    if (el) el.hidden = false;
+    document.querySelectorAll(".sb-item[data-view]").forEach(function (b) {
+      b.classList.toggle("on", b.getAttribute("data-view") === name);
+    });
+    window.scrollTo(0, 0);
+    closeSb();
+  }
+  document.querySelectorAll("[data-view]").forEach(function (b) {
+    b.addEventListener("click", function () { go(b.getAttribute("data-view")); });
+  });
+  document.querySelectorAll("[data-go]").forEach(function (b) {
+    b.addEventListener("click", function () { go(b.getAttribute("data-go")); });
+  });
+
+  var toastEl = document.getElementById("toast"), toastT = null;
+  function toast (msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
+  }
+  document.querySelectorAll("[data-soon]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      toast("Noted — we’ll email " + (session ? session.email : "you") + " when this opens.");
+    });
+  });
+
+  document.getElementById("cd-copy").addEventListener("click", function () {
+    var id = document.getElementById("cd-code").textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(id);
+    this.textContent = "Copied";
+    var self = this;
+    setTimeout(function () { self.textContent = "Copy ID"; }, 1600);
+  });
+  document.getElementById("sb-signout").addEventListener("click", function () {
+    sessionStorage.removeItem("sf_session");
+    localStorage.removeItem("sf_profiles");
+    window.location.href = "sterling_finance_landing.html";
+  });
+
+  if (!session) { go("none"); return; }
+
+  function money (v) {
+    var n = Number(v);
+    if (isNaN(n)) return String(v == null ? "—" : v);
+    return "$" + n.toLocaleString(undefined, { maximumFractionDigits: 2 });
+  }
+  function cardnum (id) {
+    var h = String(id || "").replace(/-/g, "").toUpperCase().slice(0, 16);
+    return (h.match(/.{1,4}/g) || []).join(" ");
+  }
+  function monthlyRepayment (amount, termStr) {
+    var P = Number(amount) || 0;
+    var n = parseInt(String(termStr || ""), 10) || 0;
+    if (!P || !n) return null;
+    var r = 0.048 / 12;               /* 4.8% APR, amortised */
+    return P * r / (1 - Math.pow(1 + r, -n));
+  }
+
+  sb.rpc("app_details", { p_id: session.id, p_email: session.email }).then(function (r) {
+    var row = r.data && r.data[0];
+    if (!row) { go("none"); return; }
+    var det = row.details || {};
+
+    document.getElementById("bc-name").textContent = row.full_name;
+    document.getElementById("bc-num").textContent = cardnum(row.id);
+    document.getElementById("bc-balance").textContent = money(det.amount);
+    document.getElementById("bc-balance-label").textContent =
+      row.status === "approved" ? "Approved amount" : "Requested amount";
+    document.getElementById("ms-term").textContent = det.loan_term || "—";
+    document.getElementById("ms-income").textContent = money(det.monthly_income);
+    var repay = monthlyRepayment(det.amount, det.loan_term);
+    document.getElementById("ms-repay").textContent = repay ? money(repay) : "—";
+
+    var pill = document.getElementById("cd-pill");
+    pill.className = "status-pill st-" + row.status;
+    document.getElementById("cd-status").textContent =
+      row.status === "approved" ? "Approved" : (row.status === "declined" ? "Declined" : "Pending");
+    document.getElementById("cd-code").textContent = row.id;
+
+    /* statements */
+    var stmts = document.getElementById("cd-stmts");
+    function stmt (title, when, amt, credit) {
+      var d = document.createElement("div");
+      d.className = "stmt";
+      var l = document.createElement("div");
+      var b1 = document.createElement("b"); b1.textContent = title;
+      var s = document.createElement("small"); s.textContent = when;
+      l.appendChild(b1); l.appendChild(s);
+      var rb = document.createElement("b");
+      rb.textContent = (credit ? "+" : "") + amt;
+      if (credit) rb.className = "cr";
+      d.appendChild(l); d.appendChild(rb);
+      stmts.appendChild(d);
+    }
+    if (row.status === "approved") {
+      stmt("Loan approved", new Date(row.updated_at || row.created_at).toLocaleString(), money(det.amount), true);
+    }
+    stmt("Loan application submitted", new Date(row.created_at).toLocaleString(), money(det.amount), row.status === "approved");
+
+    /* application details (sidebar section) */
+    var list = document.getElementById("cd-details");
+    function tile (label, value) {
+      var txt = String(value);
+      var d = document.createElement("div");
+      d.className = "tile";
+      if (txt.length > 42) d.style.gridColumn = "1 / -1";
+      var s = document.createElement("small"); s.textContent = label;
+      var b = document.createElement("b"); b.textContent = txt;
+      d.appendChild(s); d.appendChild(b);
+      return d;
+    }
+    Object.keys(det).forEach(function (k) {
+      if (k === "consent") return;
+      var v = det[k];
+      if (v === null || v === undefined || v === "") return;
+      list.appendChild(tile(k.replace(/_/g, " "),
+        (typeof v === "boolean") ? (v ? "Yes" : "No") : String(v)));
+    });
+    list.appendChild(tile("Email", row.email));
+    list.appendChild(tile("Application ID", row.id));
+    list.appendChild(tile("Submitted", new Date(row.created_at).toLocaleString()));
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var splash = document.getElementById("splash");
+  var done = false;
+  function dismiss () {
+    if (done) return;
+    done = true;
+    splash.classList.add("hide");
+    document.body.style.overflow = "";
+    setTimeout(function () { splash.style.display = "none"; }, 750);
+  }
+  window.addEventListener("load", function () { setTimeout(dismiss, 1600); });
+  setTimeout(dismiss, 4500);
+})();
+</script>
+
+</body>
+</html>
